@@ -1,0 +1,23 @@
+
+
+
+mvn io.quarkus:quarkus-maven-plugin:0.12.0:create \
+    -DprojectGroupId=br.com.ms.quarkus \
+    -DprojectArtifactId=ms-quarkus \
+    -DclassName="br.com.ms.quarkus.MovieResources" \
+    -Dpath="/movie"
+
+
+
+
+mvn compile quarkus:dev
+
+
+
+
+mvn package -Pnative -Dnative-image.docker-build=true
+
+
+
+
+docker run --rm -it -p "8080:8080" -v ${PWD}/target/ms-quarkus-1.0-SNAPSHOT-runner:/app centos /app -Dquarkus.http.host=0.0.0.0
